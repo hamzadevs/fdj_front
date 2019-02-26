@@ -35,18 +35,6 @@ export class SoccerService {
       })
     ); 
   }
-  getData(): Observable<any[]> {
-    return this.http.get<any>(API_URL+'/get_leagues')
-  }
-
-  getAllLeagues(): Observable<League[]>{
-    return this.http.get(API_URL+'/get_leagues').pipe(map(
-      (response: Response) => {
-        console.log(response);
-        return response.json();
-      }
-    ));
-  }
   getAllTeams(league: string){
     var replaced = league.split(' ').join('+');
     return this.http.get(API_URL+'/get_teams?league='+replaced).pipe(map(

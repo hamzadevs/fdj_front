@@ -1,0 +1,20 @@
+<div class="d-flex flex-column flex-md-row align-items-center px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <nav class="col-md-3 my-2 my-md-0 mr-md-6">
+    <form class="example-form" [formGroup]='leaguesForm'>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Search by league" [matAutocomplete]="auto" formControlName='leagueInput'>
+      </mat-form-field>
+      
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngIf="isLoading" class="is-loading">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-option>
+        <ng-container *ngIf="!isLoading">
+          <mat-option *ngFor="let league of filteredLeagues" [value]="league" (onSelectionChange)="getTeam(league)">
+            <span>{{ league.name }}</span>
+          </mat-option>
+        </ng-container>
+      </mat-autocomplete>
+    </form>
+  </nav>
+</div>

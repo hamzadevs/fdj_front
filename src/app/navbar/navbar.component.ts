@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, FormControl} from '@angular/forms';
-import { SoccerService } from './soccer.service';
-import { League } from './League.interface'
-import { debounceTime, tap, switchMap, finalize, startWith, distinctUntilChanged, map } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { League } from '../League.interface';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { SoccerService } from '../soccer.service';
+import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
-export class AppComponent {
+export class NavbarComponent implements OnInit {
+
   title = 'FDJ Search';
   filteredLeagues: League[] = [];
   leaguesForm: FormGroup;
@@ -26,6 +27,7 @@ export class AppComponent {
     this.leaguesForm.get('leagueInput')
       .valueChanges
       .pipe(
+        startWith(''),
         debounceTime(300),
         tap(() => this.isLoading = true),
         switchMap(value => this.soccerService.search({name: value})
@@ -36,9 +38,14 @@ export class AppComponent {
       )
       .subscribe(leagues => this.filteredLeagues = leagues.results);
     }
+    
 
     displayFn(league: League) {
       if (league) { return league.name; }
     }
-  
+    getTeam(league: League) {
+      console.log(league)
+      // here you can get id 
+   }
+
 }
