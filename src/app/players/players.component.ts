@@ -11,9 +11,15 @@ import { Player } from '../player.interface';
 export class PlayersComponent implements OnInit {
 
   players: Player[];
+  showSearchBar: any=false;
   constructor(private soccerService: SoccerService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    if(window.location.pathname === '/'){
+      this.showSearchBar = true;
+    }else(
+      this.showSearchBar = false
+    )
     let team_id = this.route.snapshot.paramMap.get('id');
     this.soccerService.getPlayersTeam(team_id)
     .subscribe((response) => {
