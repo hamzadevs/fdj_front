@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import { SoccerService } from './soccer.service';
 import { Team } from './team.interface';
+import { Player } from './player.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +13,32 @@ import { Team } from './team.interface';
 export class AppComponent {
   title = 'FDJ Search';
   listTeam: Team[] = [];
+  listPlayer: Player[] = [];
+  showroulet: any = false
 
 
-  constructor(private soccerService: SoccerService) {}
+  constructor(private soccerService: SoccerService, private router:Router) {}
 
   updateResults(results: Team[]): void {
     this.listTeam = results;
+  }
+
+  getPlayersTeam(team: Team){
+    this.soccerService.getPlayersTeam(team.id)
+    .subscribe((response) => {
+      //this.listPlayer = response;
+      console.log(response);
+    }
+    )
+  }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    if(window.location.pathname === '/'){
+      this.showroulet = false;
+    }else(
+      this.showroulet = true
+    )
   }
   
 }

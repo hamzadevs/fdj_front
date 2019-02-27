@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-2 col-5 text-center">
+                <img [src]="player.picture" alt="" class="mx-auto rounded-circle img-fluid">
+                <br>
+                <ul class="list-inline ratings text-center" title="Ratings">
+                    <li class="list-inline-item"><a href="#"><span class="fa fa-star"></span></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><span class="fa fa-star"></span></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><span class="fa fa-star"></span></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><span class="fa fa-star"></span></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#"><span class="fa fa-star"></span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-6 col-7">
+                <h3 class="mb-0 text-truncated">{{player.name}}</h3>
+                <p class="lead">{{player.position}}</p>
+                <p class="text-muted">
+                  Birthday: {{ player.birthday }}
+                </p>
+                <p class="text-muted">
+                    Price: {{ player.amountTrans }}
+                  </p>
+            </div>
+            <!--/col-->
+        </div>
+        <!--/row-->
+    </div>
+    <!--/card-block-->

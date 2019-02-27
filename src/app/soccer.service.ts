@@ -65,14 +65,13 @@ export class SoccerService {
         })
       );
   }
-  getPlayersTeam(team: number){
+  getPlayersTeam(team: any){
     return this.http.get(API_URL+'/get_players/'+team)
     .pipe(
       tap((response: IPlayerResponse) => {
-        console.log(response);
-        response.results = response.players
-          .map(player => new Player(player.id, player.name, player.birthday, player.amountTrans, player.picture))
-        return response;
+        response.results = response.player
+          .map(player => new Player(player.idPlayer, player.strPlayer, player.strPosition, player.dateBorn, player.strSigning, player.strThumb))
+          return response;
       })
     );
   }

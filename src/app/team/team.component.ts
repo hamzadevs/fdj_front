@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { Team } from '../team.interface';
 import { SoccerService } from '../soccer.service';
+import { Player } from '../player.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-team',
@@ -9,19 +11,14 @@ import { SoccerService } from '../soccer.service';
 })
 export class TeamComponent implements OnInit {
   @Input() team: Team;
-  @Output() teamVisisted = new EventEmitter<Team>();
+  @Output() listPlayer = new EventEmitter<Player[]>();
 
-  constructor(private soccerService: SoccerService) { }
+  constructor(private soccerService: SoccerService, private router: Router) { }
 
   ngOnInit() {
   }
   getPlayersTeam(team: Team){
-    this.soccerService.getPlayersTeam(team.id)
-    .subscribe((response) => {
-      this.teamVisisted.emit(this.team);
-      console.log(response);
-    }
-    )
+    this.router.navigate(['team/',team.id]);
   }
 
 }

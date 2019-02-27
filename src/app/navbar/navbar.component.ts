@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { SoccerService } from '../soccer.service';
 import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 import { Team } from '../team.interface';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -16,14 +17,20 @@ export class NavbarComponent implements OnInit {
   filteredLeagues: League[] = [];
   leaguesForm: FormGroup;
   isLoading = false;
+  public showSearchBar : any = false;
 
   @Output() teams = new EventEmitter<Team[]>();
 
 
-  constructor(private fb: FormBuilder, private soccerService: SoccerService) {}
+  constructor(private fb: FormBuilder, private soccerService: SoccerService, private router:Router) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    if(window.location.pathname === '/'){
+      this.showSearchBar = true;
+    }else(
+      this.showSearchBar = false
+    )
     this.leaguesForm = this.fb.group({
       leagueInput: null
     })
