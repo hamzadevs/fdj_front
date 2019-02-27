@@ -1,8 +1,9 @@
 <div id="app">
-  <app-navbar></app-navbar>
+  <app-navbar (loading)="loading = $event" (teams)="updateResults($event)"></app-navbar>
   <div class="container">
-    <router-outlet class="container"></router-outlet>
-
+      <div class="row align-items-start">
+        <app-team *ngFor="let team of listTeam" [team]="team" class="col-3 d-inline mt-2 mb-2" ></app-team>
+      </div>
   </div>
 </div>
 

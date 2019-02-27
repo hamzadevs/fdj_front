@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { League } from '../League.interface';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SoccerService } from '../soccer.service';
 import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
+import { Team } from '../team.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,8 @@ export class NavbarComponent implements OnInit {
   filteredLeagues: League[] = [];
   leaguesForm: FormGroup;
   isLoading = false;
+
+  @Output() teams = new EventEmitter<Team[]>();
 
 
   constructor(private fb: FormBuilder, private soccerService: SoccerService) {}
@@ -37,15 +40,19 @@ export class NavbarComponent implements OnInit {
         )
       )
       .subscribe(leagues => this.filteredLeagues = leagues.results);
-    }
+  }
     
 
-    displayFn(league: League) {
-      if (league) { return league.name; }
-    }
-    getTeam(league: League) {
-      console.log(league)
-      // here you can get id 
-   }
+  displayFn(league: League) {
+    if (league) { return league.name; }
+  }
+  getAllTeam(league: League){
+    this.soccerService.getAllTeams(league.name)
+      .subscribe(
+        (teams) => this.teams.emit(teams.results),
+        (error: Response) => console.log(error)
+      );
+  }
+  
 
 }

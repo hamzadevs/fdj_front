@@ -11,4 +11,4 @@ export interface ILeagueResponse {
     total: number;
     results: League[];
     leagues: Leaguesource[];
-  }
+}

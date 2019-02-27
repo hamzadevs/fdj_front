@@ -10,7 +10,7 @@
           <mat-spinner diameter="20"></mat-spinner>
         </mat-option>
         <ng-container *ngIf="!isLoading">
-          <mat-option *ngFor="let league of filteredLeagues" [value]="league" (onSelectionChange)="getTeam(league)">
+          <mat-option *ngFor="let league of filteredLeagues" [value]="league" (onSelectionChange)="getAllTeam(league)">
             <span>{{ league.name }}</span>
           </mat-option>
         </ng-container>
