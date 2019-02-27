@@ -22,15 +22,6 @@ export class AppComponent {
   updateResults(results: Team[]): void {
     this.listTeam = results;
   }
-
-  getPlayersTeam(team: Team){
-    this.soccerService.getPlayersTeam(team.id)
-    .subscribe((response) => {
-      //this.listPlayer = response;
-      console.log(response);
-    }
-    )
-  }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.

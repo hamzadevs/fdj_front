@@ -3,6 +3,7 @@ import { SoccerService } from '../soccer.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Player } from '../player.interface';
 import { Team } from '../team.interface';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-players',
@@ -12,20 +13,26 @@ import { Team } from '../team.interface';
 export class PlayersComponent implements OnInit {
 
   players: Player[];
-  public showSearchBar: any=false;
   public team: Team;
-  constructor(private soccerService: SoccerService, private route: ActivatedRoute) { }
+  constructor(private soccerService: SoccerService, private route: ActivatedRoute,public nav: NavbarService) { 
+  }
 
   ngOnInit() {
-    this.team = this.soccerService.getCurrentTeam();
-    console.log(this.team)
-    this.showSearchBar = this.soccerService.checkShowbarSearch();
-    let team_id = this.route.snapshot.paramMap.get('id');
+    this.nav.hide();
+    this.nav.setTeam(this.soccerService.getCurrentTeam());
+    this.route.params.subscribe(params => {
+      let team_id = +params['id'];
+      this.soccerService.getPlayersTeam(team_id)
+        .subscribe((response) => {
+          this.players = response.results
+          });
+    });
+    /* let team_id = this.route.snapshot.paramMap.get('id');
     this.soccerService.getPlayersTeam(team_id)
     .subscribe((response) => {
       this.players = response.results
       }
-    )
+    ) */
   }
   
 }

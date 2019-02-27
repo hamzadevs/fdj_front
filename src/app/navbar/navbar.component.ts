@@ -5,7 +5,7 @@ import { SoccerService } from '../soccer.service';
 import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 import { Team } from '../team.interface';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,19 +17,17 @@ export class NavbarComponent implements OnInit {
   title = 'FDJ Search';
   filteredLeagues: League[] = [];
   leaguesForm: FormGroup;
-  isLoading = false;
-  public showSearchBar : any = false;
-
-  public team: Team; 
+  isLoading = false; 
+  team: Team; 
 
 
-  constructor(private fb: FormBuilder, private soccerService: SoccerService, private router:Router, private location: Location) {}
+  constructor(private fb: FormBuilder, private soccerService: SoccerService, private router:Router, public nav: NavbarService) {}
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    this.nav.show();
     this.team = this.soccerService.getCurrentTeam();
-    console.log(this.team)
-    this.showSearchBar = this.soccerService.checkShowbarSearch();
+
     
     this.leaguesForm = this.fb.group({
       leagueInput: null
@@ -57,6 +55,5 @@ export class NavbarComponent implements OnInit {
     this.soccerService.setCurrentLeague(league);
     this.router.navigateByUrl('/teams');
   }
-  
 
 }

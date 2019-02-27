@@ -1,5 +1,5 @@
 <div class="d-flex flex-column flex-md-row align-items-center px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <nav class="col-md-3 my-2 my-md-0 mr-md-6" *ngIf="showSearchBar">
+  <nav class="col-md-3 my-2 my-md-0 mr-md-6" *ngIf="nav.visible">
     <form class="example-form" [formGroup]='leaguesForm'>
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Search by league" [matAutocomplete]="auto" formControlName='leagueInput'>
@@ -17,8 +17,8 @@
       </mat-autocomplete>
     </form>
   </nav>
-  <nav class="col-md-8 p-3 my-2 my-md-0 mr-md-6 center" *ngIf="!showSearchBar">
+  <nav class="col-md-8 p-3 my-2 my-md-0 mr-md-6 center" *ngIf="!nav.visible">
     <a class="col-6" [routerLink]="['/teams']" routerLinkActive="router-link-active" > Back</a>
-    <div class="col-6 d-inline float-right">{{ team.name }}</div>
+    <div class="col-6 d-inline float-right">{{ nav.team.name }}</div>
   </nav>
 </div>

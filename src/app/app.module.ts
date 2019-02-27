@@ -18,7 +18,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PlayerComponent } from './player/player.component';
 import { PlayersComponent } from './players/players.component';
 import { TeamsComponent } from './teams/teams.component';
-import { TeamComponent } from './team/team.component'
+import { TeamComponent } from './team/team.component';
+import { NavbarService } from './navbar.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { TeamComponent } from './team/team.component'
     MatFormFieldModule,
     MatProgressSpinnerModule
   ],
-  providers: [SoccerService],
+  providers: [SoccerService,NavbarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

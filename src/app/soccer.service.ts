@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
@@ -22,6 +22,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class SoccerService {
+  @Output() showSearchBar: EventEmitter<any> = new EventEmitter();
   private current_team: Team;
   private current_league: League;
 
@@ -42,8 +43,10 @@ export class SoccerService {
 
   checkShowbarSearch():any{
     if(window.location.pathname === '/' || window.location.pathname === '/teams'){
+      this.showSearchBar.emit(true);
       return true;
     }else{
+      this.showSearchBar.emit(true);
       return false;
     }
   }
