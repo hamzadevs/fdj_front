@@ -1,10 +1,7 @@
 <div id="app">
   <app-navbar (loading)="loading = $event" (teams)="updateResults($event)"></app-navbar>
   <div class="container">
-      <div class="row align-items-start" *ngIf="!showroulet">
-        <app-team *ngFor="let team of listTeam" [team]="team" class="col-2 d-inline mt-2 mb-2" ></app-team>
-      </div>
-      <router-outlet *ngIf="showroulet"></router-outlet>
+      <router-outlet></router-outlet>
   </div>
 </div>
 

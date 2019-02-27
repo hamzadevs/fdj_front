@@ -22,17 +22,35 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class SoccerService {
-  myMethod$: Observable<any>;
-  private myMethodSubject = new Subject<any>();
+  private current_team: Team;
+  private current_league: League;
 
-  myMethod(data) {
-      console.log(data); // I have data! Let's return it so subscribers can use it!
-      // we can do stuff with data if we want
-      this.myMethodSubject.next(data);
+  setCurrentTeam(data:any){
+    this.current_team = data;
   }
+
+  getCurrentTeam():any{
+    return this.current_team;
+  }
+
+  setCurrentLeague(data:any){
+    this.current_league = data;
+  }
+  getCurrentLeague(){
+    return this.current_league;
+  }
+
+  checkShowbarSearch():any{
+    if(window.location.pathname === '/' || window.location.pathname === '/teams'){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
+  
   constructor(private http: HttpClient ) {
-    this.myMethod$ = this.myMethodSubject.asObservable();
-   }  
+  }  
 
   search(filter: {name: string} = {name: ''}): Observable<ILeagueResponse> {
     if (typeof filter.name === "object") return this.http.get(API_URL+'/get_leagues')
@@ -42,7 +60,6 @@ export class SoccerService {
       return this.http.get(API_URL+'/get_leagues')
       .pipe(
         tap((response: ILeagueResponse) => {
-          console.log(response);
           response.results = response.leagues
             .map(league => new League(league.idLeague, league.strLeague))
             .filter(league => league.name.toLowerCase().search(filter.name.toLowerCase()) != -1 )
@@ -58,7 +75,6 @@ export class SoccerService {
     return this.http.get(API_URL+'/get_teams/'+replaced)
       .pipe(
         tap((response: ITeamResponse) => {
-          console.log(response);
           response.results = response.teams
             .map(team => new Team(team.idTeam, team.strTeam,team.strTeamBadge))
           return response;

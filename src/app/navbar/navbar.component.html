@@ -18,7 +18,7 @@
     </form>
   </nav>
   <nav class="col-md-8 p-3 my-2 my-md-0 mr-md-6 center" *ngIf="!showSearchBar">
-    <a class="col-6" [routerLink]="['/']" routerLinkActive="router-link-active" > Back</a>
-    <div class="col-6 d-inline float-right">name_team</div>
+    <a class="col-6" [routerLink]="['/teams']" routerLinkActive="router-link-active" > Back</a>
+    <div class="col-6 d-inline float-right">{{ team.name }}</div>
   </nav>
 </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SoccerService } from '../soccer.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Player } from '../player.interface';
+import { Team } from '../team.interface';
 
 @Component({
   selector: 'app-players',
@@ -11,33 +12,20 @@ import { Player } from '../player.interface';
 export class PlayersComponent implements OnInit {
 
   players: Player[];
-  showSearchBar: any=false;
+  public showSearchBar: any=false;
+  public team: Team;
   constructor(private soccerService: SoccerService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if(window.location.pathname === '/'){
-      this.showSearchBar = true;
-    }else(
-      this.showSearchBar = false
-    )
+    this.team = this.soccerService.getCurrentTeam();
+    console.log(this.team)
+    this.showSearchBar = this.soccerService.checkShowbarSearch();
     let team_id = this.route.snapshot.paramMap.get('id');
     this.soccerService.getPlayersTeam(team_id)
     .subscribe((response) => {
       this.players = response.results
-      console.log(response);
       }
     )
-  }
-  ngOnChanges(): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
-    let team_id = this.route.snapshot.paramMap.get('id');
-    this.soccerService.getPlayersTeam(team_id)
-    .subscribe((response) => {
-      console.log(response);
-      }
-    )
-    
   }
   
 }

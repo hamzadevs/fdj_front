@@ -5,6 +5,7 @@ import { SoccerService } from '../soccer.service';
 import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 import { Team } from '../team.interface';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -19,18 +20,17 @@ export class NavbarComponent implements OnInit {
   isLoading = false;
   public showSearchBar : any = false;
 
-  @Output() teams = new EventEmitter<Team[]>();
+  public team: Team; 
 
 
-  constructor(private fb: FormBuilder, private soccerService: SoccerService, private router:Router) {}
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private soccerService: SoccerService, private router:Router, private location: Location) {}
+  ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    if(window.location.pathname === '/'){
-      this.showSearchBar = true;
-    }else(
-      this.showSearchBar = false
-    )
+    this.team = this.soccerService.getCurrentTeam();
+    console.log(this.team)
+    this.showSearchBar = this.soccerService.checkShowbarSearch();
+    
     this.leaguesForm = this.fb.group({
       leagueInput: null
     })
@@ -54,11 +54,8 @@ export class NavbarComponent implements OnInit {
     if (league) { return league.name; }
   }
   getAllTeam(league: League){
-    this.soccerService.getAllTeams(league.name)
-      .subscribe(
-        (teams) => this.teams.emit(teams.results),
-        (error: Response) => console.log(error)
-      );
+    this.soccerService.setCurrentLeague(league);
+    this.router.navigateByUrl('/teams');
   }
   
 

@@ -11,14 +11,14 @@ import { Router } from '@angular/router';
 })
 export class TeamComponent implements OnInit {
   @Input() team: Team;
-  @Output() listPlayer = new EventEmitter<Player[]>();
 
   constructor(private soccerService: SoccerService, private router: Router) { }
 
   ngOnInit() {
   }
   getPlayersTeam(team: Team){
-    this.router.navigate(['team/',team.id]);
+    this.soccerService.setCurrentTeam(team);
+    this.router.navigate(['/team',team.id]);
   }
 
 }

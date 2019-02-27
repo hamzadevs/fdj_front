@@ -4,7 +4,7 @@ import { TeamsComponent } from './teams/teams.component';
 import { PlayersComponent } from './players/players.component';
 
 const APP_ROUTES: Routes = [
-    {path:"",component: TeamsComponent},
+    {path:"teams",component: TeamsComponent},
     {path:"team/:id",component: PlayersComponent}
 ]
 export const routing: ModuleWithProviders=RouterModule.forRoot(APP_ROUTES);
